@@ -19,7 +19,7 @@ import (
 )
 
 func main() {
-	cfgPath := flag.String("f", "/etc/hccast.yaml", "config file")
+	cfgPath := flag.String("f", "/etc/hccast.yml", "config file")
 	verbose := flag.Bool("v", false, "verbose (debug) logging")
 	flag.Parse()
 

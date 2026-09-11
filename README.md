@@ -5,8 +5,11 @@ the egress interface carries a valid health alias.
 
 ```bash
 go build -o hccast ./cmd/hccast
-hccast -f /etc/hccast.yaml
+hccast -f /etc/hccast.yml
 ```
+
+runit: install `packaging/runit/hccast` as `/etc/sv/hccast`, link into
+`/var/service`. The `run` script writes a sample `/etc/hccast.yml` if missing.
 
 See **USAGE.md** for alias format, config, peers, and SIGHUP.
 See **EXPLANATION.md** for why GR is off and how desired-set reconcile works.
