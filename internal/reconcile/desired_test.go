@@ -63,6 +63,9 @@ func TestDesired(t *testing.T) {
 		{"announce false", linksOK, []Route{{Dst: pfx9, LinkIndex: 1}}, nil, ""},
 		{"per_ip attrs", linksOK, []Route{{Dst: pfx2, LinkIndex: 1}}, []string{"10.0.0.2/32"}, "10.0.0.2/32"},
 		{"has via skipped", linksOK, []Route{{Dst: pfx1, LinkIndex: 1, Gw: via}}, nil, ""},
+		{"proto kernel skipped", linksOK, []Route{{Dst: pfx1, LinkIndex: 1, Protocol: 2}}, nil, ""},
+		{"link-local v4 skipped", linksOK, []Route{{Dst: netip.MustParsePrefix("169.254.0.0/16"), LinkIndex: 1}}, nil, ""},
+		{"link-local v6 skipped", linksOK, []Route{{Dst: netip.MustParsePrefix("fe80::/64"), LinkIndex: 1}}, nil, ""},
 		{"missing token", []Link{{Index: 1, Alias: "", Up: true}}, routeOK, nil, ""},
 		{"wrong oif", linksOK, []Route{{Dst: pfx1, LinkIndex: 99}}, nil, ""},
 	}

@@ -121,6 +121,8 @@ netlink as the integration surface.
 ### Seatbelts (even when alias is the primary filter)
 
 - Prefer **explicit on-link** routes (`dev <iface>`, no `via`, or onlink).
+- Skip `proto kernel` (connected prefixes from addresses) and link-local
+  (`169.254.0.0/16`, `fe80::/10`) — those are not intent.
 - Skip default routes (`0.0.0.0/0`, `::/0`) even if oif matches.
 - GoBGP advertise-only: **do not** install paths into the FIB (no zebra). That
   avoids feedback loops where we re-advertise what we ourselves wrote.

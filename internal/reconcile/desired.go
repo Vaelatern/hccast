@@ -18,12 +18,16 @@ type Link struct {
 	Up    bool
 }
 
+// RTPROT_KERNEL — connected routes from interface addresses.
+const protoKernel = 2
+
 // Route is the subset of netlink route state we need.
 type Route struct {
 	Dst       netip.Prefix
 	LinkIndex int
 	Gw        netip.Addr // zero ⇒ on-link / no via
 	Table     int
+	Protocol  int // RTPROT_*; 2 = kernel
 }
 
 // Desired computes the set of prefixes that should be advertised right now.
@@ -49,6 +53,12 @@ func Desired(links []Link, routes []Route, cfg *config.File, now time.Time) map[
 	for _, rt := range routes {
 		if !rt.Dst.IsValid() {
 			continue
+		}
+		if rt.Protocol == protoKernel {
+			continue // connected from addresses, not intent
+		}
+		if rt.Dst.Addr().IsLinkLocalUnicast() {
+			continue // fe80::/10, 169.254.0.0/16
 		}
 		if rs.SkipDefaults() && rt.Dst.Bits() == 0 {
 			continue

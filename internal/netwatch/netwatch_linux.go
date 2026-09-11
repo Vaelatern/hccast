@@ -278,6 +278,7 @@ func routeFrom(r netlink.Route) (reconcile.Route, bool) {
 		LinkIndex: r.LinkIndex,
 		Gw:        gw,
 		Table:     r.Table,
+		Protocol:  int(r.Protocol),
 	}, true
 }
 
