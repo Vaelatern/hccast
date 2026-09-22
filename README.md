@@ -3,13 +3,12 @@
 Health-check cast: advertise on-link Linux FIB routes over embedded GoBGP when
 the egress interface carries a valid health alias.
 
+# SLOP. Beware. look at ./promptlog for all purely-human-generated content.
+
 ```bash
 go build -o hccast ./cmd/hccast
 hccast -f /etc/hccast.yml
 ```
-
-runit: install `packaging/runit/hccast` as `/etc/sv/hccast`, link into
-`/var/service`. The `run` script writes a sample `/etc/hccast.yml` if missing.
 
 See **USAGE.md** for alias format, config, peers, and SIGHUP.
 See **EXPLANATION.md** for why GR is off and how desired-set reconcile works.
